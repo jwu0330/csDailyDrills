@@ -1,0 +1,17 @@
+# 忽略 VS 相關資料夾
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 忽略編譯輸出
+*.exe
+*.dll
+*.pdb
+
+# Mac/Windows 系統檔案
+.DS_Store
+Thumbs.db
