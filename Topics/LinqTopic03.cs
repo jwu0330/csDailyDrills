@@ -8,15 +8,15 @@ using System.Diagnostics.CodeAnalysis;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace CSharpDailyDrills.Topics
 {
+    public struct Order
+    {
+        public string CustomerName { get; set; }
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public int Price { get; set; }
+    }
     internal class LinqTopic03
     {
-        struct Order
-        {
-            public string CustomerName { get; set; }
-            public string ProductName { get; set; }
-            public int Quantity { get; set; }
-            public int Price { get; set; }
-        }
         public static void Run()
         {
             // url: https://chatgpt.com/share/680ef03b-43a8-8005-aa01-f9ca2d557790
@@ -48,23 +48,29 @@ namespace CSharpDailyDrills.Topics
             }
 
 
-            List<Action> actions = new List<Action>
-        {
-            LinqTopic03Funtion.Function1,
-            LinqTopic03Funtion.Function2,
-            LinqTopic03Funtion.Function3,
-            LinqTopic03Funtion.Function4,
-            LinqTopic03Funtion.Function5,
-            LinqTopic03Funtion.Function6,
-            LinqTopic03Funtion.Function7,
-            LinqTopic03Funtion.Function8,
-            LinqTopic03Funtion.Function9
-        };
+            var actions = new List<Action<List<string>, List<Order>>>
+            {
+                LinqTopic03Funtion.Function1,
+                LinqTopic03Funtion.Function2,
+                LinqTopic03Funtion.Function3,
+                LinqTopic03Funtion.Function4,
+                LinqTopic03Funtion.Function5,
+                LinqTopic03Funtion.Function6,
+                LinqTopic03Funtion.Function7,
+                LinqTopic03Funtion.Function8,
+                LinqTopic03Funtion.Function9,
+                LinqTopic03Funtion.Function10,
+                LinqTopic03Funtion.Function11,
+                LinqTopic03Funtion.Function12,
+                LinqTopic03Funtion.Function13,
+                LinqTopic03Funtion.Function14
+            };
+
 
             Console.Write("請輸入 1~9 的數字：");
             if (int.TryParse(Console.ReadLine(), out int num) && num >= 1 && num <= 9)
             {
-                actions[num - 1](); // 用索引呼叫
+                actions[num - 1](tittleName, orders); // 用索引呼叫
             }
             else
             {
