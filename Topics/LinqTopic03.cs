@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
+using System.Diagnostics.CodeAnalysis;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace CSharpDailyDrills.Topics
 {
     internal class LinqTopic03
-    {   
+    {
         struct Order
         {
             public string CustomerName { get; set; }
@@ -18,8 +20,14 @@ namespace CSharpDailyDrills.Topics
         public static void Run()
         {
             // url: https://chatgpt.com/share/680ef03b-43a8-8005-aa01-f9ca2d557790
-            Console.WriteLine("\nRunning LinqTopic02 is successful.");
-            string[] csvFile = new[]
+
+            //string path = @"../products.csv"; // 或 "./products.csv"
+            string path = @"D:\code\CS\csDailyDrills\products.csv";     
+            //ReadFile(path);
+
+
+            Console.WriteLine("\nRunning LinqTopic03 is successful.");
+            List<string> csvFile = new List<string>
             {
                 "CustomerName,ProductName,Quantity,Price",
                 "Alice,Keyboard,2,100",
@@ -31,34 +39,63 @@ namespace CSharpDailyDrills.Topics
                 "Bob,Monitor,2,300"
             };
 
-            var dataList = csvFile.Skip(1).Select(n => n.Split(",")).ToList(Order);
+            List<string> tittleName = csvFile[0].Split(",").ToList();
             List<Order> orders = new List<Order>();
-            foreach (var data in dataList)
+            foreach (var data in csvFile)
             {
-                orders.Add(new Order { CustomerName = data.CustomerName, ProductName = data.ProductName, Price = data.Quantity });
+                var datas = data.Split(",");
+                orders.Add(new Order { CustomerName = datas[0], ProductName = datas[1], Quantity = int.Parse(datas[2]), Price = int.Parse(datas[3])});
             }
-            // 1
 
 
+            List<Action> actions = new List<Action>
+        {
+            LinqTopic03Funtion.Function1,
+            LinqTopic03Funtion.Function2,
+            LinqTopic03Funtion.Function3,
+            LinqTopic03Funtion.Function4,
+            LinqTopic03Funtion.Function5,
+            LinqTopic03Funtion.Function6,
+            LinqTopic03Funtion.Function7,
+            LinqTopic03Funtion.Function8,
+            LinqTopic03Funtion.Function9
+        };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Console.Write("請輸入 1~9 的數字：");
+            if (int.TryParse(Console.ReadLine(), out int num) && num >= 1 && num <= 9)
+            {
+                actions[num - 1](); // 用索引呼叫
+            }
+            else
+            {
+                Console.WriteLine("請輸入有效數字");
+            }
 
 
 
 
 
         }
+
+        //public static List<string> ReadFile(string path)
+        //{   
+        //    if (!File.Exists(path))
+        //    {
+        //        Console.WriteLine("找不到檔案！");
+        //        return ("test").ToList();
+
+        //    }
+
+        //    using (StreamReader sr = new StreamReader(path))
+        //    {
+        //        string? line;
+        //        while ((line = sr.ReadLine()) != null)
+        //        {
+        //            Console.WriteLine("讀到一行：" + line);
+        //        }
+        //    }
+        //    return line;
+        //}
+
     }
 }
