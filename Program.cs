@@ -9,7 +9,9 @@ namespace CSharpDailyDrills
             Console.WriteLine("Hello, World!");
             //LinqTopic01.Run(); // ← 呼叫你剛剛新增的那一題
             //LinqTopic02.Run(); // ← 呼叫你剛剛新增的那一題
-            LinqTopic03.Run(); // ← 呼叫你剛剛新增的那一題
+            //LinqTopic03.Run(); // ← 呼叫你剛剛新增的那一題
+            LinqTopic04_1A2B.Run(); // ← 呼叫你剛剛新增的那一題
+
         }
     }
 }
