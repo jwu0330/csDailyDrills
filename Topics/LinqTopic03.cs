@@ -6,48 +6,34 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.CompilerServices;
 namespace CSharpDailyDrills.Topics
 {
     public struct Order
     {
-        public string CustomerName { get; set; }
+        //ProductNumber,ProductName,Amount,UnitPrice,ProductType
+
+        public string ProductNumber { get; set; }
         public string ProductName { get; set; }
-        public int Quantity { get; set; }
-        public int Price { get; set; }
+        public int Amount { get; set; }
+        public int UnitPrice { get; set; }
+        public string ProductType { get; set; }
     }
     internal class LinqTopic03
     {
+        public static List<string> tittleName = new List<string>();
+        public static List<Order> orders = new List<Order>();
         public static void Run()
         {
             // url: https://chatgpt.com/share/680ef03b-43a8-8005-aa01-f9ca2d557790
 
             //string path = @"../products.csv"; // 或 "./products.csv"
-            string path = @"D:\code\CS\csDailyDrills\products.csv";     
-            //ReadFile(path);
+            string path = @"D:\code\CS\csDailyDrills\products.csv";
 
+            (tittleName, orders) = ReadFile(path);
 
             Console.WriteLine("\nRunning LinqTopic03 is successful.");
-            List<string> csvFile = new List<string>
-            {
-                "CustomerName,ProductName,Quantity,Price",
-                "Alice,Keyboard,2,100",
-                "Bob,Mouse,1,40",
-                "Alice,Monitor,1,300",
-                "David,Keyboard,1,100",
-                "Betty,Speaker,3,60",
-                "Alice,Webcam,1,80",
-                "Bob,Monitor,2,300"
-            };
-
-            List<string> tittleName = csvFile[0].Split(",").ToList();
-            List<Order> orders = new List<Order>();
-            foreach (var data in csvFile)
-            {
-                var datas = data.Split(",");
-                orders.Add(new Order { CustomerName = datas[0], ProductName = datas[1], Quantity = int.Parse(datas[2]), Price = int.Parse(datas[3])});
-            }
-
-
+            
             var actions = new List<Action<List<string>, List<Order>>>
             {
                 LinqTopic03Funtion.Function1,
@@ -66,42 +52,44 @@ namespace CSharpDailyDrills.Topics
                 LinqTopic03Funtion.Function14
             };
 
-
-            Console.Write("請輸入 1~9 的數字：");
-            if (int.TryParse(Console.ReadLine(), out int num) && num >= 1 && num <= 9)
+            while (true)
             {
-                actions[num - 1](tittleName, orders); // 用索引呼叫
+                Console.Write("請輸入 1~9 的數字：");
+                if (int.TryParse(Console.ReadLine(), out int num) && num >= 1 && num <= 15)
+                {
+                    actions[num - 1](tittleName, orders); // 用索引呼叫
+                }
+                else
+                {
+                    Console.WriteLine("請輸入有效數字");
+                }
             }
-            else
+            }
+
+        public static (List<string>, List<Order>)ReadFile(string path)
+        {
+            if (!File.Exists(path))
             {
-                Console.WriteLine("請輸入有效數字");
+                Console.WriteLine("找不到檔案！");
+                return ([], []);
             }
-
-
-
-
-
+            var lineStrings = new List<string>();
+            using (StreamReader sr = new StreamReader(path))
+            {
+                string? line;
+                if ((line = sr.ReadLine()) != null)
+                {
+                    tittleName = line.Split(",").ToList();
+                }
+                while ((line = sr.ReadLine()) != null)
+                {
+                    var datas = line.Split(",");
+                    orders.Add(new Order { ProductNumber = datas[0], ProductName = datas[1], Amount = int.Parse(datas[2]), UnitPrice = int.Parse(datas[3]), ProductType = datas[4] });
+                    //lineStrings.Add(line);
+                }
+            }
+            return (tittleName, orders);
         }
-
-        //public static List<string> ReadFile(string path)
-        //{   
-        //    if (!File.Exists(path))
-        //    {
-        //        Console.WriteLine("找不到檔案！");
-        //        return ("test").ToList();
-
-        //    }
-
-        //    using (StreamReader sr = new StreamReader(path))
-        //    {
-        //        string? line;
-        //        while ((line = sr.ReadLine()) != null)
-        //        {
-        //            Console.WriteLine("讀到一行：" + line);
-        //        }
-        //    }
-        //    return line;
-        //}
 
     }
 }

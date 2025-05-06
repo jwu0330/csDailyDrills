@@ -8,37 +8,59 @@ namespace CSharpDailyDrills.Topics
 {
     public static class LinqTopic03Funtion
     {
+        //ProductNumber,ProductName,Amount,UnitPrice,ProductType
+
         public static void Function1(List<string> tittleName, List<Order> orders)
         {
             // 1. 計算所有商品的總金額（UnitPrice * Amount）  
             Console.WriteLine("你選擇了功能 1");
-            Console.WriteLine(tittleName[0]);
-
+            var reslut = orders[1].UnitPrice;
+            foreach(var i in orders)
+            {
+                Console.WriteLine($"商品 {i.ProductName} 的總金額: {i.Amount * i.UnitPrice:N0}");
+            }
          }
         public static void Function2(List<string> tittleName, List<Order> orders)
         {
             // 2. 計算所有商品的平均價格 
             Console.WriteLine("你選擇了功能 2");
+            //foreach (var i in orders)
+            {
+                Console.WriteLine($"所有商品的平均價格: {orders.Average(n => n.UnitPrice):N0}");
+            }
         }
         public static void Function3(List<string> tittleName, List<Order> orders)
         {
             // 3. 分別計算該類別底下所有產品的總金額（UnitPrice * Amount）
             Console.WriteLine("你選擇了功能 3");
+            var result = orders
+                .GroupBy(n => n.ProductType)
+                .Select(m => new {type = m.Key, totalPrice = m.Sum(o => o.UnitPrice * o.Amount)}) ;
+            foreach(var i in result)
+            {
+                Console.WriteLine($"類別 {i.type} 下產品的總金額: {i.totalPrice:N0}");
+            }
         }
-        public static void Function4(List<string> tittleName, List<Order> orders)
+        public static void Function4(List<string> tittleName, List<Order> orders)   
         {
             // 4. 計算商品的總數量  
             Console.WriteLine("你選擇了功能 4");
+            Console.WriteLine($"商品的總數量: {orders.Sum(n => n.Amount):N0}");
         }
         public static void Function5(List<string> tittleName, List<Order> orders)
         {
             // 5. 計算商品的平均數量
             Console.WriteLine("你選擇了功能 5");
+            Console.WriteLine($"商品的平均數量: {orders.Average(n => n.Amount):N2}");
+
         }
         public static void Function6(List<string> tittleName, List<Order> orders)
         {
             // 6. 找出哪一項商品最貴  
             Console.WriteLine("你選擇了功能 6");
+            var maxProduct = orders.OrderByDescending(o => o.UnitPrice).FirstOrDefault();
+            Console.WriteLine($"最貴的商品為: {maxProduct.ProductName}\n價格為: {maxProduct.UnitPrice:N0}");
+
         }
         public static void Function7(List<string> tittleName, List<Order> orders)
         {
