@@ -33,7 +33,7 @@ namespace CSharpDailyDrills.Topics
             (tittleName, orders) = ReadFile(path);
 
             Console.WriteLine("\nRunning LinqTopic03 is successful.");
-            
+            //func
             var actions = new List<Action<List<string>, List<Order>>>
             {
                 LinqTopic03Funtion.Function1,
@@ -63,8 +63,9 @@ namespace CSharpDailyDrills.Topics
                 {
                     Console.WriteLine("請輸入有效數字");
                 }
+                Console.WriteLine("\n");
             }
-            }
+        }
 
         public static (List<string>, List<Order>)ReadFile(string path)
         {
