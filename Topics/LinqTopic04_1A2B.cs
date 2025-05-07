@@ -19,22 +19,9 @@ namespace CSharpDailyDrills.Topics
                 {
 
                     Console.WriteLine($"{string.Join(',', inputNumbers)}");
-                    //var A = inputNumbers.Select(n => n.Join(answer))
-                    int A = 0, B = 0;
-                    for (int i = 0; i <4; i++)
-                    {
-                        A += (inputNumbers[i] == answer[i]) ? 1 : 0;
-                    }
-                    for (int i = 0; i < 4; i++)
-                    {
-                        for (int j = 0; j <4; j++)
-                        {
-                            if (j == i) continue;
-                            B += (inputNumbers[i] == answer[j]) ? 1 : 0;
-                        }
-                    }
-                    //foreach (int i,j in inputNumbers, ananswer)
-                    Console.WriteLine($"{A}A{B}B");
+                    var A = inputNumbers.Zip(answer, (a, b) => a == b).Count(match => match);
+                    var bothHave = inputNumbers.Intersect(answer).Count();
+                    Console.WriteLine($"{A}A{bothHave - A}B");
                 }
                 else
                 {
