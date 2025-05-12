@@ -17,7 +17,6 @@ namespace CSharpDailyDrills.Topics
                 int[] inputNumbers = [.. Console.ReadLine().Take(4).Select(c => int.Parse(c.ToString()))];
                 if (inputNumbers.Distinct().Count() == 4)
                 {
-
                     Console.WriteLine($"{string.Join(',', inputNumbers)}");
                     var A = inputNumbers.Zip(answer, (a, b) => a == b).Count(match => match);
                     var bothHave = inputNumbers.Intersect(answer).Count();
